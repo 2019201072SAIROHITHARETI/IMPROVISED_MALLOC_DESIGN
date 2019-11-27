@@ -65,3 +65,109 @@ if(total_region<=0)
     return 1;    
 }
  
+
+void *Mem_Alloc(int size)
+{
+	if(size<=0){
+		printf("your size is invalid");
+		return NULL;
+	}
+	if(size>remaining_space)
+	{
+		cout<<"not enough memory\n";
+		return NULL;
+	}	
+	
+	node_memory *node_biggest=starthead_free;
+	node_memory *node_current=node_biggest;
+	void *userpointer=node_biggest->data;
+	int biggestsize=node_biggest->size;
+
+	int temporary=rand()%2;
+	printf("%d",temporary);
+	//worst fit
+	if(temporary==0){
+	printf("using worst fit");
+	printf("\n");
+	for(int i=1;i<=counter_freenode;i++)
+	{	
+		if(node_biggest->size < node_current->size)
+			node_biggest=node_current;
+		
+		node_current--;
+	}
+    }
+    //first fit
+    else{
+    printf("using first fit");
+    printf("\n");
+	for(int i=1;i<=counter_freenode;i++)
+	{	
+		if(node_biggest->size < node_current->size){
+			node_biggest=node_current;
+			break;
+		}
+		
+		node_current--;
+	}
+    }
+	
+	userpointer=node_biggest->data;
+	node_memory *newallo;
+	
+	if(size<node_biggest->size)
+	{	
+		
+		node_biggest->size-=size;
+		node_biggest->data+=size;
+		
+		if(starthead_alloc->size!= 0)
+			newallo=end_alloc +1;
+		
+		else
+			newallo=starthead_alloc;
+		
+		newallo->size=size;
+		newallo->data=userpointer;
+		counter_allocnodes++;
+		end_alloc=newallo;
+		remaining_space-=size;
+	}
+	else if(size==node_biggest->size)
+	{
+		
+		if(starthead_alloc->size!= 0)
+			newallo=end_alloc+1;
+		else
+			newallo=starthead_alloc;
+
+		newallo->size=size;
+		newallo->data=userpointer;
+		counter_allocnodes++;
+		end_alloc=newallo;
+		remaining_space-=size;
+		
+		if(node_biggest!=end_free)
+		{
+			node_biggest->data=end_free->data;
+			node_biggest->size=end_free->size;
+		}
+		
+		end_free++;	
+		if(counter_freenode>1)
+			counter_freenode--;
+		else if(counter_freenode==1)
+		{
+			starthead_free->data=NULL;
+			starthead_free->size=0;
+		}	
+
+		
+	}	
+	else	
+	{
+		cout<<"not enough memory\n";
+		return NULL;
+	}	
+	return userpointer;
+}
