@@ -343,3 +343,24 @@ void *callo(int number,int size){
 	}
 	return ptr;
 }
+
+int Mem_GetSize(void *ptr){
+   node_memory *current_node=starthead_alloc;
+   bool flag=false;
+
+	for(int i=0;i<counter_allocnodes;i++){
+		uintptr_t n1=(uintptr_t)current_node->data;
+		if(n1==(uintptr_t)ptr)	
+		{
+			size_realloc_data=current_node->size;
+			flag=true;
+			break;
+		}	
+		current_node++;
+	}
+	if(flag==false){
+		return -1;
+	}
+	return size_realloc_data;
+}
+
