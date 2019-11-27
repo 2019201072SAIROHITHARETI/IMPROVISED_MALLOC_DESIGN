@@ -163,6 +163,12 @@ void *Mem_Alloc(int size)
 		}	
 
 		
+	}
+	else	
+	{
+		cout<<"not enough memory\n";
+		return NULL;
 	}	
+	return userpointer;
 	
 }
