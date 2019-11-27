@@ -265,3 +265,81 @@ int Mem_Free(void *pointer1)
 	return 1;
 }
 
+void garbage_collector()
+{
+	sbrk(-garbage_size);
+	cout<<"Memory allocated clear."<<endl;
+}
+
+void *reallo(void *ptr){
+
+	node_memory *current_node=starthead_alloc;
+	for(int i=0;i<counter_allocnodes;i++){
+		uintptr_t n1=(uintptr_t)current_node->data;
+		if(n1==(uintptr_t)ptr)	
+		{
+			size_realloc_data=2*current_node->size;
+			break;
+		}	
+		current_node++;
+	}
+	void *newpointer=Mem_Alloc(size_realloc_data);
+	memcpy(newpointer,ptr,size_realloc_data/2);
+	Mem_Free(ptr);
+
+	return newpointer;
+
+}
+
+//using templates to write for all data types
+template <typename T>
+void writ(void *ptr,T data){
+
+	node_memory *current_node=starthead_alloc;
+	size_data=sizeof(data);
+	bool flag=false;
+	
+	for(int i=0;i<counter_allocnodes;i++){
+       
+
+		char* low=(char*)current_node->data;
+		char* high=low+current_node->size;
+		char* ptr1=(char*)ptr;
+		if(low<=ptr1 && ptr1<high){
+			T *ptr2;
+			if(size_data<=(high-ptr1)*sizeof(char)){
+              ptr2=(T *)ptr;
+			  flag=true;
+			  *ptr2=data;
+              
+			}
+			else{
+              printf("ur croosing ur boundry");
+			  exit(1);
+              
+			}
+
+		
+		}
+
+		current_node++;
+	}
+
+	if(flag==false){
+			printf("segment_fault");
+		}	
+}
+
+void *callo(int number,int size){
+
+	void *ptr=Mem_Alloc(number*size);
+	if(ptr==NULL){
+         return NULL;
+	}
+	char *low=(char*)ptr;
+	char *high=low+number*size;
+	for(int i=0;i<high-low;i++){
+		*(low+i)=0;
+	}
+	return ptr;
+}
