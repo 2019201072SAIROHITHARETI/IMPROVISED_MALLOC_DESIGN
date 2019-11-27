@@ -172,3 +172,96 @@ void *Mem_Alloc(int size)
 	return userpointer;
 	
 }
+int Mem_Free(void *pointer1)
+{
+	if(pointer1==NULL){
+		printf("invalid free memory pointer");
+		return -1;
+	}
+
+
+	if(!Mem_IsValid(pointer1))
+	{	
+		cout<<"Not a valid pointer\n";
+		return -1;
+	}	
+	node_memory *node_current=starthead_alloc;
+	unsigned long long int low,high;
+	
+	for(int i=0;i<counter_allocnodes;i++)
+	{
+		
+		low=(uintptr_t)node_current->data;
+		high=low + node_current->size;
+
+		if((uintptr_t)low<=(uintptr_t)pointer1 && (uintptr_t)pointer1<(uintptr_t)high)
+			break;
+		node_current++;	
+	}
+	int actual_size=node_current->size;
+	node_current->size=(uintptr_t)pointer1 - (uintptr_t)low;
+	
+	node_memory *newfree;
+	if(node_current->size>=1)
+	{	
+		newfree=end_free;											
+		newfree--;
+		newfree->size = actual_size - node_current->size;
+	}
+
+	else
+	{
+		newfree=end_free-1; 
+		newfree->size = actual_size;
+		node_current->size=end_alloc->size;
+		node_current->data=end_alloc->data;
+		end_alloc--;
+		counter_allocnodes--;
+	}	
+	newfree->data=pointer1;
+	counter_freenode++;
+	end_free=newfree;
+	remaining_space+=newfree->size;
+
+    //merging_left
+    node_memory *pointer=(node_memory*)newfree;
+	low=(uintptr_t)pointer->data;
+	high=low + pointer->size;
+	node_current=starthead_free;
+	int high1;
+	for (int i = 0; i < counter_freenode; ++i)
+	{
+		high1=(uintptr_t)node_current->data + node_current->size;
+		if(high1 == low)	
+		{
+			node_current->size+=pointer->size;	
+			end_free++;
+			counter_freenode--;
+			break;
+		}	
+		node_current--;
+	}
+    //merging rights
+	pointer=(node_memory*)newfree;
+	low=(uintptr_t)pointer->data;
+	high=low + pointer->size;
+	node_current=starthead_free;
+	int low1;
+	for (int i=0; i<counter_freenode; ++i)
+	{
+		low1=(uintptr_t)node_current->data;
+		if(high == low1)	
+		{
+			pointer->size+=node_current->size;
+			node_current->size=end_free->size;
+			node_current->data=end_free->data;
+			end_free++;
+			counter_freenode--;
+			break;
+		}	
+		node_current--;
+	}
+
+	return 1;
+}
+
