@@ -33,7 +33,18 @@ int main()
 	printf("initial size:%d\n",Mem_GetSize(ptr3));
 	Mem_Free(ptr3);//It frees entire memory
 	printf("size after free:%d\n",Mem_GetSize(ptr3));//returns -1 saying that there is no such memory pointing by that pointer any more
+	//testcase to show working of mergeleft and mergeright...
 
+	int *ptr4=(int *)Mem_Alloc(8);
+	int *ptr5=(int *)Mem_Alloc(8);
+	int *ptr6=(int *)Mem_Alloc(8);
+	int *ptr7=(int *)Mem_Alloc(4096-24);
+	Mem_Free(ptr4);
+	Mem_Free(ptr5);
+	Mem_Free(ptr6);
+	printf("\n");
+	
+	int*ptr8=(int *)Mem_Alloc(24);//if asked something more than 24..will not be allocated..
 	
 
 
