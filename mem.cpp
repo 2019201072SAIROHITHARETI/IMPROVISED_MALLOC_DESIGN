@@ -101,7 +101,8 @@ void *Mem_Alloc(int size)
     else{
     printf("using first fit");
     printf("\n");
-	for(int i=1;i<=counter_freenode;i++)
+	    int i;
+	for(i=1;i<=counter_freenode;i++)
 	{	
 		if(node_biggest->size>=size){
 			break;
