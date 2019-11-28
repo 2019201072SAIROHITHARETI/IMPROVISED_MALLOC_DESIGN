@@ -32,3 +32,6 @@ This function returns 1 if ptr falls within a currently allocated object and 0 i
 
 int Mem_Free:
 Mem_Free frees the memory object that ptr falls within, according to the rules described above. Just like with the standard free(), if ptr is NULL, then no operation is performed. The function returns 0 on success and -1 if ptr to does not fall within a currently allocated object
+
+
+memtemp.h contains all the extended fuctionalites that handles dangling pointer and memory leak(function type).And we used random fit which is collection of worst fit and first fit.It has APIs to read,write,copy.All error handling are done. 
