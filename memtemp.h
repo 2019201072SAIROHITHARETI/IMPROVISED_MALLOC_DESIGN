@@ -702,7 +702,7 @@ void free_list_data(){
 	   }
 		cout<<temp->data<<" ";
 	 	cout<<temp->size<<" ";
-		temp--;
+		temp++;
 
 	}
 
