@@ -103,13 +103,17 @@ void *Mem_Alloc(int size)
     printf("\n");
 	for(int i=1;i<=counter_freenode;i++)
 	{	
-		if(node_biggest->size < node_current->size){
-			node_biggest=node_current;
+		if(node_biggest->size>=size){
 			break;
 		}
 		
-		node_current--;
+		node_biggest--;
 	}
+	    if(i==counter_freenode+1)
+	    {
+		    cout<<"No big slot"<<endl;
+		    return NULL;
+	    }
     }
 	
 	userpointer=node_biggest->data;
