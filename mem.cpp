@@ -261,6 +261,18 @@ int Mem_Free(void *pointer1)
 		}	
 		node_current--;
 	}
+	counter_freenode=0;
+	node_memory *temp=starthead_free;
+	if(temp==end_free){
+		counter_freenode=1;
+	}
+	else
+	{
+	while(temp!=end_free){
+		counter_freenode++;
+		temp--;
+	}
+	}
 
 	return 1;
 }
