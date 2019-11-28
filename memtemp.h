@@ -694,14 +694,16 @@ void clear_nodes_after_function(int before,int after){
 void free_list_data(){
 	node_memory *temp=starthead_free;
 	int i=0;
+	if(counter_freenode==0){
+		cout<<"no free nodes";
+		break;
+	}
+	
 	for(i=0;i<counter_freenode;i++){
 		cout<<temp->data<<" ";
 	 	cout<<temp->size<<" ";
 		temp--;
 
-	}
-	if(i==0){
-		cout<<"no free nodes";
 	}
 
 
