@@ -9,10 +9,10 @@ void *Mem_alloc(int size):
 Mem_Alloc() is similar to the library function malloc(). Mem_Alloc takes as input the size in bytes of the object to be allocated and returns a pointer to the start of that object. The function returns NULL if there is not enough free space within total_region allocated by Mem_Init to satisfy this request. 
 
 void *reallo(void *ptr):
-we double the given pointer size and free the already allocated pointer reove from alloclist and add to free list.And return the newly allocated pointer to user.Its entry is maintained in the alloclist.
+we double the given pointer size and free the already allocated pointer remove from alloclist and add to free list.And return the newly allocated pointer to user.Its entry is maintained in the alloclist.
 
 void writ(void *ptr,T data):
-To handle the case of writing out of bound of allocated variable size.
+To handle the case of writing out of bound of allocated variable size.Its is basically api that handles such cases..
 
 void *callo(int number,int size):
 Similar to that of Mem_alloc and also Initialize allocated memory with zeros. 
