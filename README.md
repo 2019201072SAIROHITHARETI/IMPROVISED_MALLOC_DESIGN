@@ -2,7 +2,8 @@
 OS PROJECT
 DEFINED MODULES:
 
-int Mem_Init(int total_region): Mem_Init is called one time by a process using your routines. total_region is the number of bytes that you should request from the OS using mmap.
+int Mem_Init(int total_region):
+Mem_Init is called one time by a process using your routines. total_region is the number of bytes that you should request from the OS using mmap.
 
 void *Mem_alloc(int size):
 Mem_Alloc() is similar to the library function malloc(). Mem_Alloc takes as input the size in bytes of the object to be allocated and returns a pointer to the start of that object. The function returns NULL if there is not enough free space within total_region allocated by Mem_Init to satisfy this request. 
