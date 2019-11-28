@@ -285,6 +285,15 @@ int memory_free(void *pointer1)
 		}	
 		node_current--;
 	}
+	
+	 node_memory *temp=starthead_free;
+	while(temp!=end_free){
+		counter_freenode++;
+		temp--;
+	}
+	if(temp==end_free){
+		counter_freenode=1;
+	}
 
 	return 1;
 }
@@ -683,14 +692,18 @@ void clear_nodes_after_function(int before,int after){
 }
 
 void free_list_data(){
+	void free_list_data(){
 	node_memory *temp=starthead_free;
-	cout<<counter_freenode;
 	for(int i=0;i<counter_freenode;i++){
 		cout<<temp->data<<" ";
-		cout<<temp->size<<" ";
+	 	cout<<temp->size<<" ";
 		temp--;
+
 	}
+
 }
+
+
 
 
 
