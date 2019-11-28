@@ -286,13 +286,14 @@ int memory_free(void *pointer1)
 		node_current--;
 	}
 	
+	counter_freenode=0;
 	 node_memory *temp=starthead_free;
 	while(temp!=end_free){
 		counter_freenode++;
 		temp--;
 	}
 	if(temp==end_free){
-		counter_freenode=1;
+		counter_freenode=0;
 	}
 
 	return 1;
@@ -694,12 +695,11 @@ void clear_nodes_after_function(int before,int after){
 void free_list_data(){
 	node_memory *temp=starthead_free;
 	int i=0;
-	if(counter_freenode==0){
-		cout<<"no free nodes";
+	for( i=0;i<counter_freenode;i++){
+		if(counter_freenode==0){
+		cout<<"no data in list";
 		break;
-	}
-	
-	for(i=0;i<counter_freenode;i++){
+	   }
 		cout<<temp->data<<" ";
 	 	cout<<temp->size<<" ";
 		temp--;
