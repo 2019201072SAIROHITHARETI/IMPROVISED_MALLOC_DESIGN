@@ -293,7 +293,7 @@ int memory_free(void *pointer1)
 		temp--;
 	}
 	if(temp==end_free){
-		counter_freenode=0;
+		counter_freenode=1;
 	}
 
 	return 1;
